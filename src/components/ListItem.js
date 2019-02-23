@@ -8,6 +8,18 @@ class ListItem extends Component {
     constructor(props){
         super(props);
     }
+
+    renderDescription() {
+        const { library, selected } = this.props;
+        console.log(this.props)
+
+        if(library.id === selected) {
+            return (
+                <Text>{library.description}</Text>
+            )
+        }
+    }
+
     render() {
         const { titleStyle } = styles;
         const { id, title } = this.props.library;
@@ -22,6 +34,7 @@ class ListItem extends Component {
                             {title}
                         </Text>
                     </CardSection>
+                    {this.renderDescription()}
                 </View>
             </TouchableWithoutFeedback>
         )
@@ -35,4 +48,8 @@ const styles = {
     },
 }
 
-export default connect(null, actions)(ListItem);
+const mapStateToProps = state => {
+    return { selected: state.selected }
+};
+
+export default connect(mapStateToProps, actions)(ListItem);
